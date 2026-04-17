@@ -1,0 +1,22 @@
+# Hidden Profits AI — OWASP Security Headers
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none';"
+</IfModule>
+# Disable server signature
+ServerSignature Off
+# Protect wp-config.php
+<Files wp-config.php>
+  order allow,deny
+  deny from all
+</Files>
+# Block XML-RPC (common attack vector)
+<Files xmlrpc.php>
+  order allow,deny
+  deny from all
+</Files>
